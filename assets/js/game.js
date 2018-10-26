@@ -132,6 +132,8 @@ $(document).ready(function(){
             if(defender.helthpoints <= 0){
                 //show the player win text 
                 $('#pwin').show();
+                //show the title to choose an enemy
+                $('#enemies').show();
                 $('#pwin').text("You deffeted "+defender.title+" ,chose another enemy to fight");
                 $(".deffender, #pattack, #dattack").hide(1000);
                 $(".deffender").remove();

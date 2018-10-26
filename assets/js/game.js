@@ -62,7 +62,7 @@ $(document).ready(function(){
 
             for(var i=0;i<4;i++){
                 //set div for each character
-                $(".playerfield").append("<div class=\"player\"><h6>"+charArray[i].title+"</h6><div class=\"imgdiv\"><img src=\"./assets/images/"+charArray[i].name+".jpg\" ></div><h4 id=\""+charArray[i].name+"\">"+charArray[i].helthpoints+"</h4><span style='display:none' id='index'>"+i+"</span></div>");
+                $(".playerfield").append("<div class=\"player\"><h6>"+charArray[i].title+"</h6><div class=\"imgdiv\"><img src=\"./assets/images/"+charArray[i].name+".jpg\" ><h5 id=\""+charArray[i].name+"\">"+charArray[i].helthpoints+"</h5><span style='display:none' id='index'>"+i+"</span></div></div>");
                 //animate the player div
                 $(".playerfield").find(".player").hide().show(1000);
             }
@@ -75,6 +75,8 @@ $(document).ready(function(){
             if(playerChoosedAlready){
                 return false;
             }
+            //hide the player list title
+            $('#selectplayer').hide();
             playSound("./assets/media/chose.mp3");
             playerChoosedAlready = true;
             $("#enemies").show(1000);
@@ -106,7 +108,7 @@ $(document).ready(function(){
                 $(".defenderpool").append($(".deffender"));
                 $(".enemypool").find(".deffender").remove();
                 $(".deffender").hide().show(1000);
-                $('#pwin').hide();
+                $('#pwin, #enemies').hide();
 
                 //creating deffender
                 defender = charArray[parseInt($(".defenderpool").find("#index").text())];
@@ -115,7 +117,8 @@ $(document).ready(function(){
             if(!enemeyChosedAlready){
                 return false;
             }
-            
+            //hide the begin fight text
+            $('#begin').hide();
             playSound("./assets/media/knife.mp3");
             //modifing the health of both fighter and deffender at each click
             defender.helthpoints = defender.defend_power(defender.helthpoints,fighter.attack_power);            
@@ -129,7 +132,6 @@ $(document).ready(function(){
             if(defender.helthpoints <= 0){
                 //show the player win text 
                 $('#pwin').show();
-                $('#begin').text("Begin Fight");
                 $('#pwin').text("You deffeted "+defender.title+" ,chose another enemy to fight");
                 $(".deffender, #pattack, #dattack").hide(1000);
                 $(".deffender").remove();
@@ -139,7 +141,6 @@ $(document).ready(function(){
 
             //in case the fighter lost his health
             if(fighter.helthpoints <= 0){
-                $('#begin').text("Begin Fight");
                 //hide all the h tags which hold the titles of the containers
                 $("#attack, #deffend,#begin, #enemies, #pattack, #dattack, #pwin").hide(1000);
                 //remove the deffender div
@@ -158,7 +159,6 @@ $(document).ready(function(){
             }
 
             //filling fighting information
-            $('#begin').text("FIGHTING");
             $('#pattack, #dattack').show();
             $('#pattack').text("you attacked "+defender.title+" for "+fighter.attack_power + " damage.");
             $('#dattack').text(defender.title + " attacked you back for " + defender.counter_attack_power + " damage.")
@@ -189,6 +189,7 @@ $(document).ready(function(){
             $(".player,.deffender,.fighter").remove();
             generate();
             $('#exampleModalCenter').modal('hide'); 
+            $('#selectplayer').show();
         });
     });
    

@@ -1,132 +1,194 @@
 $(document).ready(function(){
+    //click the begin button 
     $("#bgn").click(function(){
-        $(".game-begin").hide(1000);
+
+        //animating the tags
         $(".content").show(1000);
-        
-        $("#attack").hide();
-        $("#deffend").hide();
-        $("#begin").hide();
-        $("#enemies").hide();
-        var values = ["stormtrooper","clonetrooper","obiwan","yoda"];
-        var names = ["Storm Trooper","Clone Trooper","Obi Wan","Yoda"];
-        var points = [180,110,190,150];
-        var counter_power = [25,20,15,30];
-        var attack = [7,8,10,12];
-        var fighter,defender,defpoints,fightpoints,enemeyChosedAlready=false,playerChoosedAlready=false;
-    
-        var Character = (function(name,attack_power,counter_attack_power){
+        $("#attack,#deffend,#begin,#enemies,#begin,.game-begin").hide(1000);
+        /*******GLOBAL VARIABLES 
+            fighter: will hold the fighter instance of the character object
+            defender: will hold the defender instance of the character object
+            enemeyChosedAlready : a bolean to be used to stop chosing an enemy if there is one 
+                                  already been taken.
+            playerChoosedAlready : a bolean to be used to stop chosing a fighter if there is one
+                                  already been taken.
+        */
+        var fighter, defender, enemeyChosedAlready=false, playerChoosedAlready=false;
+
+        //an array to hold the characters objects
+        var charArray=[];
+        //an object will hold the characters of the game
+        var Character = (function(name,title,helthpoints,attack_power,counter_attack_power){
+            /*
+            character variables
+            name will hold a string of the character name without spacing-used for id of elements
+            title will hold the name of the character including spaces and capital letters
+            healthpoints hold the HP of the character
+            attack_power hold the power that the fighter use it to attack
+            counter_attack_power holds the power that used by the enemy against the fighter
+            fight_power() function will increment the HP and increase the attack power of the fighter
+                based on his attack_power value
+            defend_power() function to be used by the enemy to decrease the fighter power by a constant amount
+            */
             this.name = name;
+            this.title = title;
+            this.helthpoints = helthpoints;
             this.attack_power = attack_power;
             this.counter_attack_power = counter_attack_power;
         });
         $.extend(Character.prototype,{
-             fighter_power:function(points,base){
-                points -=this.attack_power; 
-                this.attack_power +=base;
+
+            //funciton to decrease the fighter health and increase his attack power
+             fighter_power:function(points,def_counter_attack,base){
+                points -=def_counter_attack; 
+                this.attack_power =this.attack_power + base;
                 return points;
             },
-             defend_power:function(power){
-                return power - this.counter_attack_power;
+
+            //funciton to decrease the defender health
+             defend_power:function(power,fighter_power){
+                return power - fighter_power;
             }
         });
+
+        //function to generate the characters and assign them to dives
         function generate(){
+            charArray =[
+                new Character("stormtrooper","Storm Trooper",180,7,25),
+                new Character("clonetrooper","Clone Trooper",105,8,20),
+                new Character("obiwan","Obi Wan",90,5,15),
+                new Character("yoda","Yoda",110,12,30),
+            ];
+
             for(var i=0;i<4;i++){
-                $(".playerfield").append("<div class=\"player\" name=\""+values[i]+"\"><h6>"+names[i]+"</h6><div class=\"imgdiv\"><img src=\"./assets/images/"+values[i]+".jpg\" ></div><h4 id=\""+values[i]+"\">"+points[i]+"</h4></div>");
+                //set div for each character
+                $(".playerfield").append("<div class=\"player\"><h6>"+charArray[i].title+"</h6><div class=\"imgdiv\"><img src=\"./assets/images/"+charArray[i].name+".jpg\" ></div><h4 id=\""+charArray[i].name+"\">"+charArray[i].helthpoints+"</h4><span style='display:none' id='index'>"+i+"</span></div>");
+                //animate the player div
+                $(".playerfield").find(".player").hide().show(1000);
             }
         }
+
+        //calling generate to build the characters
         generate();
+
         $(".playerfield").on("click","div.player",function(){
             if(playerChoosedAlready){
                 return false;
             }
-            var audio = document.getElementById("chose");
-            audio.play();
-            audio.currentTime -= 50.0;
+            playSound("./assets/media/chose.mp3");
             playerChoosedAlready = true;
             $("#enemies").show(1000);
-            var playername = $(this).attr("name");
+
+            //change the dive chosen to be fighter to .fighter so it won't be available to click
             $(this).attr("class","fighter");
-            for(var i=0;i<4;i++){
-                if(values[i] != playername){
-                    $(".player").hide(1000);
-                    $(".enemypool").append("<div class=\"enemy\" name=\""+values[i]+"\"><h6>"+names[i]+"</h6><div class=\"imgdiv\"><img src=\"./assets/images/"+values[i]+".jpg\" ></div><h4 id=\""+values[i]+"\">"+points[i]+"</h4></div>");
-                    $(".enemy").hide();
-                    $(".enemy").show(1000);
-                }
-            }
-            fighter = new Character(playername,attack[values.indexOf(playername)],counter_power[values.indexOf(playername)]);
-            fightpoints = points[values.indexOf(fighter.name)];
-            
+            //transfer all the other players to anther container called enemypool
+            $(".enemypool").append($(".playerfield").find(".player"));
+
+            $(".playerfield").find(".player").remove();
+
+            //animate the player div
+            $(".player").hide().show(1000);
+            //creating the fighter
+            fighter = charArray[parseInt($(".playerfield").find("#index").text())];
+            //set the base to the fighter attack power
+            base = fighter.attack_power;
         });
-        $(".enemypool").on("click","div.enemy",function(){
+        $(".enemypool").on("click","div.player",function(){
                 if(enemeyChosedAlready){
                     return false;
                 }
-                var audio = document.getElementById("chose");
-                audio.play();
-                audio.currentTime -= 50.0;
+                playSound("./assets/media/chose.mp3");
+                $("#attack, #begin, #deffend").show(1000);
+
                 enemeyChosedAlready = true;
-                defname = $(this).attr("name");
-                $("#attack").show(1000);
-                $("#begin").show(1000);
-                $("#deffend").show(1000);
-                $(this).hide(1000);
-                $(".defenderpool").append("<div class=\"deffender\" name=\""+$(this).attr("name")+"\"><h6>"+names[values.indexOf($(this).attr("name"))]+"</h6><div class=\"imgdiv\"><img src=\"./assets/images/"+values[values.indexOf($(this).attr("name"))]+".jpg\" ></div><h4 id=\""+$(this).attr("name")+"\">"+points[values.indexOf($(this).attr("name"))]+"</h4></div>");
-                $(".deffender").hide();
-                $(".deffender").show(1000);
-                defender = new Character(defname,attack[values.indexOf(defname)],counter_power[values.indexOf(defname)]);
-                defpoints = points[values.indexOf(defender.name)];
+                
+                $(this).attr("class","deffender");
+                $(".defenderpool").append($(".deffender"));
+                $(".enemypool").find(".deffender").remove();
+                $(".deffender").hide().show(1000);
+                $('#pwin').hide();
+
+                //creating deffender
+                defender = charArray[parseInt($(".defenderpool").find("#index").text())];
         });
         $("#attack").on("click",function(){
             if(!enemeyChosedAlready){
                 return false;
             }
-            var audio = document.getElementById("knife");
-            audio.play();
-            audio.currentTime -= 10.0;
-            defpoints = defender.defend_power(defpoints);
-            fightpoints = fighter.fighter_power(fightpoints,attack[values.indexOf(fighter.name)]);
-            $(".deffender").find('#'+defender.name).text(defpoints);
-            $('#'+fighter.name).text(fightpoints);
-            if(defpoints <= 0){
-                $(".deffender").hide(1000);
-                $(".deffender").attr("class","dead");
+            
+            playSound("./assets/media/knife.mp3");
+            //modifing the health of both fighter and deffender at each click
+            defender.helthpoints = defender.defend_power(defender.helthpoints,fighter.attack_power);            
+            fighter.helthpoints = fighter.fighter_power(fighter.helthpoints,defender.counter_attack_power,base);
+
+            //displying the health points for fighter and deffender
+            $(".defenderpool").find('#'+defender.name).text(defender.helthpoints);
+            $('#'+fighter.name).text(fighter.helthpoints);
+
+            //in case the deffender lost his health
+            if(defender.helthpoints <= 0){
+                //show the player win text 
+                $('#pwin').show();
+                $('#begin').text("Begin Fight");
+                $('#pwin').text("You deffeted "+defender.title+" ,chose another enemy to fight");
+                $(".deffender, #pattack, #dattack").hide(1000);
+                $(".deffender").remove();
                 enemeyChosedAlready = false;
+                fighter.attack_power = base;
             }
-            if(fightpoints <= 0){
-                $(".playerfield").empty();
-                $(".enemypool").empty();
-                $(".defenderpool").empty();
-                $(".fighter").attr("class","player");
-                
-                swal("A wild Pikachu appeared! What do you want to do?", {
-                    buttons: {
-                      cancel: "Exit",
-                      
-                      PlayAgain: true,
-                    },
-                  })
-                  .then((value) => {
-                    switch (value) {
-                   
-                      case "PlayAgain":
-                      enemeyChosedAlready = false;
-                      playerChoosedAlready = false;
-                        $("#attack").hide(1000);
-                        $("#attack").hide(1000);
-                        $("#deffend").hide(1000);
-                        $("#begin").hide(1000);
-                        $("#enemies").hide(1000);
-                        generate();
-                        break;
-                   
-                      default:
-                        $(".content").hide(1000);
-                        $(".game-begin").show(1000);
-                    }
-                  });
-                
+
+            //in case the fighter lost his health
+            if(fighter.helthpoints <= 0){
+                $('#begin').text("Begin Fight");
+                //hide all the h tags which hold the titles of the containers
+                $("#attack, #deffend,#begin, #enemies, #pattack, #dattack, #pwin").hide(1000);
+                //remove the deffender div
+                $(".deffender").remove(); 
+                //show the modal with a message
+                $(".modal-body").append("<h2> Sorry you lost , try again.</h2>")
+                $('#exampleModalCenter').modal('show'); 
+
             }
+
+            //check if the fighter won
+            if($('.enemypool').children().length == 0 && fighter.helthpoints > 0){
+                $("#attack, #deffend, #begin, #enemies, #pattack, #dattack").hide(1000);
+                $(".modal-body").append("<h2> CONGRAGULATIONS!! you won do you wanna play again.</h2>")
+                $('#exampleModalCenter').modal('show'); 
+            }
+
+            //filling fighting information
+            $('#begin').text("FIGHTING");
+            $('#pattack, #dattack').show();
+            $('#pattack').text("you attacked "+defender.title+" for "+fighter.attack_power + " damage.");
+            $('#dattack').text(defender.title + " attacked you back for " + defender.counter_attack_power + " damage.")
+        });
+
+        //function to play sound
+        function playSound(song){
+            var audio = new Audio(song);
+            audio.play();
+            audio.currentTime -= 50.0;
+
+        }
+
+        //click close button in the modal
+        $("#close").click(function(){
+            //reseting everything
+            $(".content").hide(1000);
+            $(".game-begin").show(1000);
+            location.reload();
+        });
+
+        //click the play again button
+        $("#playagain").click(function(){
+            //reseting game variables
+            enemeyChosedAlready = false;
+            playerChoosedAlready = false;    
+            $(".modal-body").empty();
+            $(".player,.deffender,.fighter").remove();
+            generate();
+            $('#exampleModalCenter').modal('hide'); 
         });
     });
    

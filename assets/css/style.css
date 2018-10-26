@@ -1,9 +1,7 @@
 *{
   box-sizing: border-box;
 }
-
-
-
+/* sound icon style */
 #sound{
   font-size: 25px;
   z-index: 255;
@@ -22,10 +20,6 @@ body{
   overflow-y: hidden;
 }
 
-.para{
-  margin-top: 30px;
-  margin:10px;
-}
 .v-header{
   height:100vh;
   display:flex;
@@ -33,6 +27,13 @@ body{
   color:rgb(236, 186, 48);
 }
 
+/* the start game div */
+.para{
+  margin-top: 30px;
+  margin:10px;
+}
+
+/*setting the background div*/
 .container{
   max-width:960px;
   padding-left:1rem;
@@ -54,8 +55,9 @@ body{
 .fullscreen-video-wrap video{
   min-height:100%;
   min-width:100%;
-}
+}/*end of background style */
 
+/*the game start div styling*/
 .header-overlay{
   height:100vh;
   position: absolute;
@@ -121,7 +123,7 @@ blink {
 }
 
 
-
+/*playing field styling*/
 .content {
   position: fixed;
   bottom: 100px;
@@ -171,4 +173,40 @@ img{
 }
 h2,h3{
   margin:10px 0;
+}
+.modal-content{
+  opacity: 0.7;
+}
+
+
+.modal-header{
+  font-size: 30px;
+  color: rgb(236, 186, 48);
+  background-color:rgb(71, 62, 30);
+}
+
+.modal-title{
+  text-align: center;
+  margin-left: 170px
+}
+
+#save{
+  background-color: rgb(236, 186, 48);
+  color: black;
+}
+
+#close{
+  background-color: black;
+  color: rgb(236, 186, 48);
+}
+.modal-body{
+  background-color:rgb(3, 3, 3);
+  color:rgb(236, 186, 48);
+  text-align: center;
+}
+.modal-footer{
+  background-color:rgb(71, 62, 30);
+}
+#bgn{
+  border: 1px rgb(236, 186, 48) solid;
 }

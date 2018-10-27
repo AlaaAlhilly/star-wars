@@ -160,7 +160,7 @@ $(document).ready(function(){
             }
 
             //check if the fighter won
-            if($('.enemypool').children().length == 0 && fighter.helthpoints > 0){
+            if($('.enemypool').children().length == 0 && $('.defenderpool').children.length == 0 && fighter.helthpoints > 0){
                 $("#attack, #deffend, #begin, #enemies, #pattack, #dattack").hide(1000);
                 //show the modal
                 $(".modal-body").append("<img src='./assets/images/"+ fighter.name +".jpg' style='width:200px; height: 200px;'><h2> CONGRAGULATIONS!!</h2><h2>you defeated all your enemeies.</h2>")

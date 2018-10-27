@@ -55,10 +55,10 @@ $(document).ready(function(){
         //function to generate the characters and assign them to dives
         function generate(){
             charArray =[
-                new Character("stormtrooper","Storm Trooper",180,7,25),
-                new Character("clonetrooper","Clone Trooper",10,8,20),
-                new Character("obiwan","Obi Wan",90,5,15),
-                new Character("yoda","Yoda",10,12,30),
+                new Character("stormtrooper","Storm Trooper",180,7,18),
+                new Character("clonetrooper","Clone Trooper",10,8,12),
+                new Character("obiwan","Obi Wan",90,5,10),
+                new Character("yoda","Yoda",10,12,15),
             ];
 
             for(var i=0;i<4;i++){

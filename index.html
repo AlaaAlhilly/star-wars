@@ -25,26 +25,30 @@
 <body>
 
   <!-- Modal -->
-  <div class="modal fade" id="exampleModalCenter" data-backdrop="static" data-keyboard="false" tabindex="-1" role="dialog"
-    aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title text-center" id="exampleModalCenterTitle">STAR WARS</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-          </button>
-        </div>
-        <div class="modal-body">
-        </div>
+  <div class="modala">
+    <div class="modal fade" data-backdrop="static" data-keyboard="false" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+      aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title" id="exampleModalCenterTitle">STAR WARS</h1>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            
 
-        <div class="modal-footer">
-          <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
-          <button id="playagain" type="button" class="btn btn-primary">Play Again</button>
+          </div>
+          <div class="modal-footer">
+            <button id="close" type="button" class="btn btn-secondary" data-dismiss="modal">Exit</button>
+            <button id="playagain" type="button" class="btn btn-primary">Play Again</button>
+          </div>
         </div>
       </div>
     </div>
-  </div><!--the end of modal div-->
+  </div>
+  <!--the end of modal div-->
 
   <!--the sound icon-->
   <i id="sound" class="fa fa-volume-mute" onclick="playpause()"></i>
@@ -55,7 +59,7 @@
       <!--background as a video-->
       <video autoplay loop muted>
         <source src="./assets/media/4K Galaxy Space Star Travel Zoom in Animation UHD HD Background AA VFX.mp4">
-      <!--background music-->
+        <!--background music-->
       </video>
       <audio id="myAudio" loop>
         <source src="./assets/media/backmusic.mp3" type="audio/mpeg">
@@ -68,8 +72,8 @@
     <div class="header-overlay"></div>
     <div class="header-content text-md-left">
       <div class="game-begin">
-        <h1>Star Wars</h1>
-        <div class="para">
+        <img src="./assets/images/starwar.jpg" alt="" style="width:400px;height:250px">
+        <div class="para"><br>
           <h5>
             <blink>Click to start game</blink>
           </h5>
@@ -103,7 +107,7 @@
 
         <!--a tag to hold the player attack power information("you attacked "+defender.title+" for "+fighter.attack_power + " damage.")-->
         <h4 id="pattack"></h4>
-        
+
         <!--a tag to hold the deffender counter attack power information(defender.title + " attacked you back for " + defender.counter_attack_power + " damage.")-->
         <h4 id="dattack"></h4>
       </div>

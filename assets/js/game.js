@@ -1,10 +1,4 @@
 $(document).ready(function(){
-    //click the begin button 
-    $("#bgn").click(function(){
-
-        //animating the tags
-        $(".content").show(1000);
-        $("#attack,#deffend,#begin,#enemies,#begin,.game-begin").hide(1000);
         /*******GLOBAL VARIABLES 
             fighter: will hold the fighter instance of the character object
             defender: will hold the defender instance of the character object
@@ -13,7 +7,14 @@ $(document).ready(function(){
             playerChoosedAlready : a bolean to be used to stop chosing a fighter if there is one
                                   already been taken.
         */
-        var fighter, defender, enemeyChosedAlready=false, playerChoosedAlready=false;
+       var fighter, defender, enemeyChosedAlready=false, playerChoosedAlready=false;
+
+    //click the begin button 
+    $("#bgn").click(function(){
+
+        //animating the tags
+        $(".content").show(1000);
+        $("#attack,#deffend,#begin,#enemies,#begin,.game-begin").hide(1000);
 
         //an array to hold the characters objects
         var charArray=[];
@@ -55,9 +56,9 @@ $(document).ready(function(){
         function generate(){
             charArray =[
                 new Character("stormtrooper","Storm Trooper",180,7,25),
-                new Character("clonetrooper","Clone Trooper",105,8,20),
+                new Character("clonetrooper","Clone Trooper",10,8,20),
                 new Character("obiwan","Obi Wan",90,5,15),
-                new Character("yoda","Yoda",110,12,30),
+                new Character("yoda","Yoda",10,12,30),
             ];
 
             for(var i=0;i<4;i++){
@@ -117,9 +118,13 @@ $(document).ready(function(){
             if(!enemeyChosedAlready){
                 return false;
             }
+            //filling fighting information
+            $('#pattack, #dattack').show();
+            $('#pattack').text("you attacked "+defender.title+" for "+fighter.attack_power + " damage.");
+            $('#dattack').text(defender.title + " attacked you back for " + defender.counter_attack_power + " damage.")
             //hide the begin fight text
             $('#begin').hide();
-            playSound("./assets/media/knife.mp3");
+            playSound("./assets/media/sword.wav");
             //modifing the health of both fighter and deffender at each click
             defender.helthpoints = defender.defend_power(defender.helthpoints,fighter.attack_power);            
             fighter.helthpoints = fighter.fighter_power(fighter.helthpoints,defender.counter_attack_power,base);
@@ -148,6 +153,7 @@ $(document).ready(function(){
                 //remove the deffender div
                 $(".deffender").remove(); 
                 //show the modal with a message
+                $('.modal-body').append("<img src='./assets/images/"+ defender.name +".jpg' style='width:200px; height: 200px;'><h2>"+defender.title+" deffeted you.");
                 $(".modal-body").append("<h2> Sorry you lost , try again.</h2>")
                 $('#exampleModalCenter').modal('show'); 
 
@@ -156,14 +162,10 @@ $(document).ready(function(){
             //check if the fighter won
             if($('.enemypool').children().length == 0 && fighter.helthpoints > 0){
                 $("#attack, #deffend, #begin, #enemies, #pattack, #dattack").hide(1000);
-                $(".modal-body").append("<h2> CONGRAGULATIONS!! you won do you wanna play again.</h2>")
+                //show the modal
+                $(".modal-body").append("<img src='./assets/images/"+ fighter.name +".jpg' style='width:200px; height: 200px;'><h2> CONGRAGULATIONS!!</h2><h2>you defeated all your enemeies.</h2>")
                 $('#exampleModalCenter').modal('show'); 
             }
-
-            //filling fighting information
-            $('#pattack, #dattack').show();
-            $('#pattack').text("you attacked "+defender.title+" for "+fighter.attack_power + " damage.");
-            $('#dattack').text(defender.title + " attacked you back for " + defender.counter_attack_power + " damage.")
         });
 
         //function to play sound

@@ -1,14 +1,7 @@
 *{
   box-sizing: border-box;
 }
-/* sound icon style */
-#sound{
-  font-size: 25px;
-  z-index: 255;
-   color:rgb(236, 186, 48);
-   position:relative;
-   top:10px;left:20px;
-}
+
 body{
   margin:0;
   font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -19,20 +12,14 @@ body{
   overflow-x:hidden;
   overflow-y: hidden;
 }
-
-.v-header{
-  height:100vh;
-  display:flex;
-  align-items:center;
-  color:rgb(236, 186, 48);
+/* sound icon style */
+#sound{
+  font-size: 25px;
+  z-index: 255;
+   color:rgb(236, 186, 48);
+   position:relative;
+   top:10px;left:20px;
 }
-
-/* the start game div */
-.para{
-  margin-top: 30px;
-  margin:10px;
-}
-
 /*setting the background div*/
 .container{
   max-width:960px;
@@ -42,6 +29,13 @@ body{
   text-align:center;
 }
 
+.v-header{
+  height:100vh;
+  display:flex;
+  align-content: center;
+  align-items:center;
+  color:rgb(236, 186, 48);
+}
 .fullscreen-video-wrap{
   position:absolute;
   top:0;
@@ -55,9 +49,8 @@ body{
 .fullscreen-video-wrap video{
   min-height:100%;
   min-width:100%;
-}/*end of background style */
+}
 
-/*the game start div styling*/
 .header-overlay{
   height:100vh;
   position: absolute;
@@ -70,6 +63,9 @@ body{
 
 .header-content{
   z-index:2;
+  z-index: 2;
+  width: 800px;
+  display: flex;
 }
 
 .header-content h1{
@@ -89,10 +85,26 @@ body{
     padding-right:3rem;
     padding-left:3rem;
   }
+}/*end of background style */
+
+/* the start game div */
+.game-begin{
+  margin: auto;
+  background-blend-mode: luminosity;
+ }
+ .game-begin img{
+  opacity: 0.4;
+  width: 100%;
+  height: 300px;
 }
-h5{
+.para{
+  margin-top: 30px;
+  margin:auto;
+  text-align: center;
+}
+/* h5{
   padding-bottom: 20px;
-}
+} */
 
 
 blink {
@@ -178,7 +190,7 @@ h2,h3{
   opacity: 0.7;
 }
 
-
+/*modal styling*/
 .modal-header{
   font-size: 30px;
   color: rgb(236, 186, 48);
@@ -186,8 +198,7 @@ h2,h3{
 }
 
 .modal-title{
-  text-align: center;
-  margin-left: 170px
+  margin-left: auto;
 }
 
 #save{
@@ -203,6 +214,8 @@ h2,h3{
   background-color:rgb(3, 3, 3);
   color:rgb(236, 186, 48);
   text-align: center;
+  margin: auto;
+  width: 100%;
 }
 .modal-footer{
   background-color:rgb(71, 62, 30);

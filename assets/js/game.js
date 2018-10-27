@@ -154,7 +154,7 @@ $(document).ready(function(){
                 $(".deffender").remove(); 
                 //show the modal with a message
                 $('.modal-body').append("<img src='./assets/images/"+ defender.name +".jpg' style='width:200px; height: 200px;'><h2>"+defender.title + "</h2>");
-                $(".modal-body").append("<h2>  deffeted you, try again.</h2>")
+                $(".modal-body").append("<h2>  defeated you, try again.</h2>")
                 $('#exampleModalCenter').modal('show'); 
 
             }

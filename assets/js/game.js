@@ -134,20 +134,21 @@ $(document).ready(function(){
             $('#'+fighter.name).text(fighter.helthpoints);
 
             //in case the deffender lost his health
-            if(defender.helthpoints <= 0){
+            if(defender.helthpoints <= 0 && fighter.helthpoints > 0){
                 //show the player win text 
                 $('#pwin').show();
                 //show the title to choose an enemy
                 $('#enemies').show();
+                //empty the deffenders container
+                $(".defenderpool").empty();
                 $('#pwin').text("You deffeted "+defender.title+" ,chose another enemy to fight");
                 $(".deffender, #pattack, #dattack").hide(1000);
-                $(".deffender").remove();
                 enemeyChosedAlready = false;
                 fighter.attack_power = base;
             }
 
             //in case the fighter lost his health
-            if(fighter.helthpoints <= 0){
+            else if(fighter.helthpoints <= 0){
                 //hide all the h tags which hold the titles of the containers
                 $("#attack, #deffend,#begin, #enemies, #pattack, #dattack, #pwin").hide(1000);
                 //remove the deffender div
@@ -160,7 +161,7 @@ $(document).ready(function(){
             }
 
             //check if the fighter won
-            if($('.enemypool').children().length == 0 && $('.defenderpool').children.length == 0 && fighter.helthpoints > 0){
+            if($('.enemypool').children().length == 0 && $('.defenderpool').children().length == 0 && fighter.helthpoints > 0){
                 $("#attack, #deffend, #begin, #enemies, #pattack, #dattack").hide(1000);
                 //show the modal
                 $(".modal-body").append("<img src='./assets/images/"+ fighter.name +".jpg' style='width:200px; height: 200px;'><h2> CONGRAGULATIONS!!</h2><h2>you defeated all your enemeies.</h2>")
